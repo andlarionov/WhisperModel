@@ -4,3 +4,4 @@ pytube
 moviepy
 youtube-transcript-api
 faster-whisper
+python-multipart
