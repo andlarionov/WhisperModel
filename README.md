@@ -1,1 +1,1 @@
-# WhisperModel
+# WhisperModel для проектного-практикума
