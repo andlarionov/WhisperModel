@@ -22,7 +22,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 
 <p><i>3. Пример использования</i></p>
 
-[Logo](https://disk.yandex.ru/i/_U7gkO5FQAgkGA)
+<img scr="https://disk.yandex.ru/i/_U7gkO5FQAgkGA"></img>
 
 <p><i>4. Члены команды</i></p>
 <table border="1">
