@@ -1,4 +1,4 @@
-[![Tests](https://github.com/sozykin/ml_fastapi_tests/actions/workflows/python-app.yml/badge.svg)]
+[![Tests](https://github.com/sozykin/ml_fastapi_tests/actions/workflows/python-app.yml/badge.svg)](https://github.com/andlarionov/WhisperModel/actions)
 <h2><i>WhisperModel (Получение текста из видео на Youtube)</i> :camera::arrow_right::page_facing_up:</h2>
 <h3><u>Содержание</u></h3>
 <p>1. Цель и функциональность программы</p>
