@@ -20,9 +20,10 @@ from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 ```
 
+Для развертывания программы в облаке используется платформа gradio. При использовании кода на своем компьютере и последующей запуске на платформе, необходимо предварительно установить модуль gradio вводя в командной строке `pip install gradio`.
 <p><i>3. Пример использования</i></p>
 
-<img scr="https://disk.yandex.ru/i/_U7gkO5FQAgkGA"></img>
+![Пример использования модели](https://github.com/aapopov52/PI_2023/blob/main/Image.png)
 
 <p><i>4. Члены команды</i></p>
 <table border="1">
