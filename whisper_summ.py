@@ -27,7 +27,7 @@ def process_video(subtitles_whisper, sURL, subtitles_lang):
         # Суммаризируем текст
         summarizer = LsaSummarizer()
         parser = PlaintextParser.from_string(text_from_video, Tokenizer("english"))
-        summarized_text = summarizer(parser.document, sentences_count=10)  # Меняйте sentences_count по вашему усмотрению
+        summarized_text = summarizer(parser.document, sentences_count=10)  # Меняем число предложений
         return "\n".join(str(sentence) for sentence in summarized_text)
 
     return "Укажите параметры работы с видео материалом."
