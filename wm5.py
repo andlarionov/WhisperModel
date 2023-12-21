@@ -4,6 +4,13 @@ import moviepy.editor as mp
 from faster_whisper import WhisperModel
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lsa import LsaSummarizer
+
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
 
 # Загружаем модель Whisper
 model = WhisperModel("large-v2")
@@ -15,7 +22,7 @@ def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
     # Распознаём видео-файл     
     if t_video != "" and not(t_video is None):
         return GetTextFromVideoAudio(t_video)
-        
+
     # Извлекаем видео ID из URL
     if 'v=' in sURL and sURL[:len('https://www.youtube.com/watch?')] == 'https://www.youtube.com/watch?':
         video_id = sURL.split("v=")[1]
@@ -28,10 +35,13 @@ def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
         if subtitres_whisper == 'Распознать аудио':
             # Анализ аудио
             return GetTextFromVideoYt(yt)    
+
     return "Укажите параметры работы с видео материалом."
 
 # получаем субтитры с Ютьб
+
 def GetSubtitres(first_language_code, yt):
+
     sLang = 'Базовые языки:' + '\n'
     bFind = False
     transcript_list = YouTubeTranscriptApi.list_transcripts(yt.video_id)
@@ -42,6 +52,7 @@ def GetSubtitres(first_language_code, yt):
             bFind = True
             break
     sLang += '\n' + 'Переводы:' + '\n'
+
     if not bFind:
         for transcript in transcript_list:
             if transcript.is_translatable == True:
@@ -59,7 +70,7 @@ def GetSubtitres(first_language_code, yt):
         return sText
     else:
         return "Указанный код языка не найден. Возможо выбрать указанные ниже языки:" + '\n' + sLang
-    
+
 # получаем аудио с Ютьюб
 def GetTextFromVideoYt(yt):
     fileName = yt.streams.filter(type = "audio").first().download()
@@ -81,7 +92,6 @@ def GetTextFromVideoAudio(fileName):
     audio_file.write_audiofile("vrem.wav")
     segments, info = model.transcribe("vrem.wav")
     sText = ''
-
     for segment in segments:
         sText += segment.text
 
@@ -89,7 +99,14 @@ def GetTextFromVideoAudio(fileName):
     os.remove("vrem.wav")
 
     return sText
-
+    
+def process_summarize(sIn):
+    if sIn != "" and not(sIn is None):
+        summarizer = LsaSummarizer()
+        parser = PlaintextParser.from_string(sIn, Tokenizer("russian"))
+        summarized_text = summarizer(parser.document, sentences_count=10)  # Меняем число предложений
+        return "\n".join(str(sentence) for sentence in summarized_text)
+    return 'Необходимо заполнить поле стенограмма'
 with gr.Blocks() as demo:
     with gr.Column(scale=2):
         t_subtitres_whisper = gr.Radio(["Субтитры", "Распознать аудио"], label = "Вариант исполнения на YouTube:")
@@ -98,9 +115,12 @@ with gr.Blocks() as demo:
         t_video = gr.Video(sources = ['upload'])
         t_audio = gr.Audio(type = 'filepath', sources = ['upload'])
         btn = gr.Button(value="Сформировать стенограмму")
-        t_stenogr = gr.Text("", label = "Стенограмма:")  
-
+        t_stenogr = gr.Text("", label = "Стенограмма:") 
+        btn_summarize = gr.Button(value="Суммаризировать стенограмму") 
+        t_summarize = gr.Text("", label = "Суммаризация:")  
+        
         btn.click(process_video, inputs=[t_subtitres_whisper, t_sURL, t_subtitres_lang, t_video, t_audio], outputs=[t_stenogr])
+        btn_summarize.click(process_summarize, inputs=[t_stenogr], outputs=[t_summarize])
+        
 demo.launch(share=True)                  
 #iface.launch(share=True)
-
