@@ -12,7 +12,7 @@ ___
   
   - текст из субтитров к видео;
   
-  - текст, полученный в результате работы модели WhisperModel. </p>
+  - текст, полученный в результате работы модели WhisperModel (аудио- видео-файлы, либо c Youtube). </p>
 
 <p><i>2. Инструкция по настройке и запуске модели</i>: Для безотказнной работы программы на локальной компьютере, необходимо скачивать файл <a href="https://github.com/andlarionov/WhisperModel/blob/main/requirements.txt" target="_blank">requirements.txt</a> вместе <a href="https://github.com/andlarionov/WhisperModel/blob/main/wm5.py">с основным кодом</a> . Он содержит необходимые библиотеки работы. Ниже приведены модули, которые необходимо использовать в коде для запуска модели :</p>
 
@@ -23,6 +23,12 @@ import moviepy.editor as mp
 from faster_whisper import WhisperModel
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
+```
+Для работы с аудио файлами, отличными от WAV, может понадобиться выполнить следующие команды:
+```python
+apt-get install software-properties-common
+sudo apt-get update
+sudo apt-get install ffmpeg
 ```
 
 Для развертывания программы в облаке используется платформа gradio. При использовании кода на своем компьютере и последующей запуске на платформе, необходимо предварительно установить модуль gradio вводя в командной строке `pip install gradio`.
