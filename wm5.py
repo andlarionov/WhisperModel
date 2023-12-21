@@ -8,7 +8,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 # Загружаем модель Whisper
 model = WhisperModel("large-v2")
 
-def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio)
+def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
     # Распознаём аудио-файл
     if t_audio != "" and not(t_audio is None):  
         return GetTextFromVideoAudio(t_audio)
