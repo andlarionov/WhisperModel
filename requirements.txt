@@ -6,3 +6,5 @@ youtube-transcript-api
 faster-whisper
 python-multipart
 gradio
+sumy
+nltk
