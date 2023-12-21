@@ -8,29 +8,33 @@ from youtube_transcript_api import YouTubeTranscriptApi
 # Загружаем модель Whisper
 model = WhisperModel("large-v2")
 
-def process_video(subtitres_whisper, sURL, subtitres_lang):#, sModelSummarize, sTextStatia):
+def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio)
+    # Распознаём аудио-файл
+    if t_audio != "" and not(t_audio is None):  
+        return GetTextFromVideoAudio(t_audio)
+    # Распознаём видео-файл     
+    if t_video != "" and not(t_video is None):
+        return GetTextFromVideoAudio(t_video)
         
     # Извлекаем видео ID из URL
-    video_id = sURL.split("v=")[1]
+    if 'v=' in sURL and sURL[:len('https://www.youtube.com/watch?')] == 'https://www.youtube.com/watch?':
+        video_id = sURL.split("v=")[1]
+        # Получаем информацию о видео
+        yt = YouTube(sURL)
+        if subtitres_whisper == 'Субтитры':
+            # Извлекаем субтитры
+            return GetSubtitres(subtitres_lang, yt)
 
-    # Получаем информацию о видео
-    yt = YouTube(sURL)
-    if subtitres_whisper == 'Субтитры':
-        # Извлекаем субтитры
-        return GetSubtitres(subtitres_lang, yt)
-    
-    if subtitres_whisper == 'Распознать аудио':
-        # Извлекаем субтитры
-        return GetTextFromVideoYt(yt)
-
+        if subtitres_whisper == 'Распознать аудио':
+            # Анализ аудио
+            return GetTextFromVideoYt(yt)    
     return "Укажите параметры работы с видео материалом."
 
-
+# получаем субтитры с Ютьб
 def GetSubtitres(first_language_code, yt):
     sLang = 'Базовые языки:' + '\n'
     bFind = False
     transcript_list = YouTubeTranscriptApi.list_transcripts(yt.video_id)
-
     for transcript in transcript_list:
         sLang += '   - ' + transcript.language_code + ' - ' + transcript.language + '\n'
         if transcript.language_code == first_language_code:
@@ -48,7 +52,6 @@ def GetSubtitres(first_language_code, yt):
                         Text_sub = transcript.translate(first_language_code).fetch()
                         bFind = True
                         break
-
     sText = ''
     if bFind:
         for s1 in Text_sub:
@@ -57,29 +60,47 @@ def GetSubtitres(first_language_code, yt):
     else:
         return "Указанный код языка не найден. Возможо выбрать указанные ниже языки:" + '\n' + sLang
     
+# получаем аудио с Ютьюб
 def GetTextFromVideoYt(yt):
     fileName = yt.streams.filter(type = "audio").first().download()
-        
     audio_file = mp.AudioFileClip(fileName) 
-    audio_file.write_audiofile("vrem.wav") 
+    audio_file.write_audiofile("vrem.wav")
     
     segments, info = model.transcribe("vrem.wav")
     sText = ''
-    
     for segment in segments:
         sText += segment.text
     os.remove(fileName)
     os.remove("vrem.wav")
-	
-    return sText
- 
 
-iface = gr.Interface(
-       fn=process_video, 
-       inputs=[
-       gr.Radio(["Субтитры", "Распознать аудио"], label = "Вариант исполнения на YouTube:"),
-       gr.Text("https://www.youtube.com/watch?v=6EsCI3CbmTk", label = "YouTube - ссылка на страницу с видео"),
-       gr.Text("ru", label = "Язык субтитров (основной либо перевод (указывается код): ru, en ...)")
-       ], 
-       outputs=['text'])
-iface.launch(share=True)
+    return sText
+        
+# Работа с аудио/видео на локальном диске
+def GetTextFromVideoAudio(fileName):
+    audio_file = mp.AudioFileClip(fileName)
+    audio_file.write_audiofile("vrem.wav")
+    segments, info = model.transcribe("vrem.wav")
+    sText = ''
+
+    for segment in segments:
+        sText += segment.text
+
+    os.remove(fileName)
+    os.remove("vrem.wav")
+
+    return sText
+
+with gr.Blocks() as demo:
+    with gr.Column(scale=2):
+        t_subtitres_whisper = gr.Radio(["Субтитры", "Распознать аудио"], label = "Вариант исполнения на YouTube:")
+        t_sURL = gr.Text("https://www.youtube.com/watch?v=6EsCI3CbmTk", label = "YouTube - ссылка на страницу с видео")
+        t_subtitres_lang = gr.Text("ru", label = "Язык субтитров (основной либо перевод (указывается код): ru, en ...)")
+        t_video = gr.Video(sources = ['upload'])
+        t_audio = gr.Audio(type = 'filepath', sources = ['upload'])
+        btn = gr.Button(value="Сформировать стенограмму")
+        t_stenogr = gr.Text("", label = "Стенограмма:")  
+
+        btn.click(process_video, inputs=[t_subtitres_whisper, t_sURL, t_subtitres_lang, t_video, t_audio], outputs=[t_stenogr])
+demo.launch(share=True)                  
+#iface.launch(share=True)
+
