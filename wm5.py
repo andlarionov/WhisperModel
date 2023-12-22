@@ -107,7 +107,11 @@ def process_summarize(sIn):
         summarized_text = summarizer(parser.document, sentences_count=10)  # Меняем число предложений
         return "\n".join(str(sentence) for sentence in summarized_text)
     return 'Необходимо заполнить поле стенограмма'
+
+
+
 with gr.Blocks() as demo:
+    gr.Markdown("<span style='font-size: 20px;'> Приложение для Формирования текстов из видео и аудиофайлов </span>")
     with gr.Column(scale=2):
         t_subtitres_whisper = gr.Radio(["Субтитры", "Распознать аудио"], label = "Вариант исполнения на YouTube:")
         t_sURL = gr.Text("https://www.youtube.com/watch?v=6EsCI3CbmTk", label = "YouTube - ссылка на страницу с видео")
@@ -115,12 +119,13 @@ with gr.Blocks() as demo:
         t_video = gr.Video(sources = ['upload'])
         t_audio = gr.Audio(type = 'filepath', sources = ['upload'])
         btn = gr.Button(value="Сформировать стенограмму")
-        t_stenogr = gr.Text("", label = "Стенограмма:") 
-        btn_summarize = gr.Button(value="Суммаризировать стенограмму") 
-        t_summarize = gr.Text("", label = "Суммаризация:")  
-        
+        t_stenogr = gr.Text("", label = "Стенограмма:")
+        btn_summarize = gr.Button(value="Суммаризировать стенограмму")
+        t_summarize = gr.Text("", label = "Суммаризация:")
+
         btn.click(process_video, inputs=[t_subtitres_whisper, t_sURL, t_subtitres_lang, t_video, t_audio], outputs=[t_stenogr])
         btn_summarize.click(process_summarize, inputs=[t_stenogr], outputs=[t_summarize])
         
 demo.launch(share=True)                  
 #iface.launch(share=True)
+
