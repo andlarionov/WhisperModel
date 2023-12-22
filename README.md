@@ -39,6 +39,7 @@ sudo apt-get install ffmpeg
 <p><i>3. Пример использования</i></p>
 
 ![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image1.png)
+![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image2.png)
 
 <p><i>4. Члены команды</i></p>
 <table border="1">
