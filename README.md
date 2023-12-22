@@ -41,6 +41,7 @@ sudo apt-get install ffmpeg
 ![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image/Image1.png)
 ![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image/Image2.png)
 
+Ссылка на приложение в gradio : [WhisperModel](https://17057622af014b6ae7.gradio.live/)
 <h4><i>4. Члены команды</i></h4>
 <table border="1">
   <tr>
