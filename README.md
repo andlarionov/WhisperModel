@@ -38,8 +38,8 @@ sudo apt-get install ffmpeg
 Для развертывания программы в облаке используется платформа gradio. При использовании кода на своем компьютере и последующей запуске на платформе, необходимо предварительно установить модуль gradio вводя в командной строке `pip install gradio`.
 <h4><i>3. Пример использования</i></h4>
 
-![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image/Image1.png)
-![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image/Image2.png)
+![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image_Audio_Video/Image1.png)
+![Пример использования модели](https://github.com/andlarionov/WhisperModel/blob/main/Image_Audio_Video/Image2.png)
 
 Ссылка на приложение в gradio : [WhisperModel](https://17057622af014b6ae7.gradio.live/)
 <h4><i>4. Члены команды</i></h4>
