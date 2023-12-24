@@ -2,7 +2,7 @@ import pytest
 #from wm5 import process_video
 import wm5_t as wm5
 
-def test_process_video__url():
+def test_YTsubtitres():
     #Выдергиваем субтитры
     subtitres_whisper = 'Субтитры'
     sURL = 'https://www.youtube.com/watch?v=6EsCI3CbmTk'
@@ -15,7 +15,8 @@ def test_process_video__url():
     sResult = 'Ну что дружище'
     
     assert result[:len(sResult)]  == sResult
-    
+
+def test_YTvideo():
     #распознаём аудио на ютюб
     subtitres_whisper = 'Распознать аудио'
     sURL = 'https://www.youtube.com/watch?v=6EsCI3CbmTk'
@@ -29,6 +30,7 @@ def test_process_video__url():
     
     assert result[:len(sResult)]  == sResult    
     
+def test_audio():
     #распознаём аудио файл (в папке с проверяемым фалом д/б ещё файл Kati_k_kasse.mp3)
     subtitres_whisper = 'Распознать аудио'
     sURL = 'https://www.youtube.com/watch?v=6EsCI3CbmTk'
@@ -41,7 +43,8 @@ def test_process_video__url():
     sResult = 'Наш покупал'
     
     assert result[:len(sResult)]  == sResult   
-     
+    
+def test_video():
     #распознаём видео файл (в папке с проверяемым фалом д/б ещё файл Kati_k_kasse.mp3)
     subtitres_whisper = 'Распознать аудио'
     sURL = 'https://www.youtube.com/watch?v=6EsCI3CbmTk'
