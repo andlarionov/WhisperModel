@@ -57,7 +57,7 @@ def GetSubtitres(first_language_code, yt):
 
     if not bFind:
         for transcript in transcript_list:
-            if transcript.is_translatable == True:
+            if transcript.is_translatable is True:
                 sLang += '   - Базовый язык ' + transcript.language_code + ' - ' + transcript.language + '. Переводы:\n'
                 for tr_l in transcript.translation_languages:
                     sLang += '      - ' + tr_l['language_code'] + ' - ' + tr_l['language'] + '\n'
