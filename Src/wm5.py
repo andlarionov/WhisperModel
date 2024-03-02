@@ -41,6 +41,7 @@ def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
 
 # получаем субтитры с Ютьб
 
+
 def GetSubtitres(first_language_code, yt):
 
     sLang = 'Базовые языки:' + '\n'
@@ -72,6 +73,7 @@ def GetSubtitres(first_language_code, yt):
     else:
         return "Указанный код языка не найден. Возможо выбрать указанные ниже языки:" + '\n' + sLang
 
+
 # получаем аудио с Ютьюб
 def GetTextFromVideoYt(yt):
     fileName = yt.streams.filter(type = "audio").first().download()
@@ -86,7 +88,8 @@ def GetTextFromVideoYt(yt):
     os.remove("vrem.wav")
 
     return sText
-        
+
+
 # Работа с аудио/видео на локальном диске
 def GetTextFromVideoAudio(fileName):
     audio_file = mp.AudioFileClip(fileName)
@@ -100,7 +103,8 @@ def GetTextFromVideoAudio(fileName):
     os.remove("vrem.wav")
 
     return sText
-    
+
+
 def process_summarize(sIn):
     if sIn != "" and not(sIn is None):
         summarizer = LsaSummarizer()
