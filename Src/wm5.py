@@ -120,7 +120,7 @@ with gr.Blocks() as demo:
         t_subtitres_whisper = gr.Radio(["Субтитры", "Распознать аудио"], label="Вариант исполнения на YouTube:")
         t_sURL = gr.Text("https://www.youtube.com/watch?v=6EsCI3CbmTk", label="YouTube - ссылка на страницу с видео")
         t_subtitres_lang = gr.Text("ru", label="Язык субтитров (основной либо перевод (указывается код): ru, en ...)")
-        t_video = gr.Video(sources = ['upload'])
+        t_video = gr.Video(sources=['upload'])
         t_audio = gr.Audio(type='filepath', sources=['upload'])
         btn = gr.Button(value="Сформировать стенограмму")
         t_stenogr = gr.Text("", label="Стенограмма:")
@@ -131,5 +131,5 @@ with gr.Blocks() as demo:
         btn_summarize.click(process_summarize, inputs=[t_stenogr], outputs=[t_summarize])
         
 demo.launch(share=True)
-#iface.launch(share=True)
+# iface.launch(share=True)
 
