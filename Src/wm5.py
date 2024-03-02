@@ -18,10 +18,10 @@ model = WhisperModel("large-v2")
 
 def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
     # Распознаём аудио-файл
-    if t_audio != "" and not(t_audio is None):
+    if t_audio != " " and not(t_audio is None):
         return GetTextFromVideoAudio(t_audio)
     # Распознаём видео-файл
-    if t_video != "" and not(t_video is None):
+    if t_video != " " and not(t_video is None):
         return GetTextFromVideoAudio(t_video)
 
     # Извлекаем видео ID из URL
