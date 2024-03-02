@@ -41,6 +41,7 @@ def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
 
 # получаем субтитры с Ютьб
 
+
 def GetSubtitres(first_language_code, yt):
 
     sLang = 'Базовые языки:' + '\n'
@@ -71,6 +72,7 @@ def GetSubtitres(first_language_code, yt):
         return sText
     else:
         return "Указанный код языка не найден. Возможо выбрать указанные ниже языки:" + '\n' + sLang
+
 
 # получаем аудио с Ютьюб
 def GetTextFromVideoYt(yt):
@@ -111,15 +113,15 @@ def process_summarize(sIn):
     return 'Необходимо заполнить поле стенограмма'
 with gr.Blocks() as demo:
     with gr.Column(scale=2):
-        t_subtitres_whisper = gr.Radio(["Субтитры", "Распознать аудио"], label = "Вариант исполнения на YouTube:")
-        t_sURL = gr.Text("https://www.youtube.com/watch?v=6EsCI3CbmTk", label = "YouTube - ссылка на страницу с видео")
-        t_subtitres_lang = gr.Text("ru", label = "Язык субтитров (основной либо перевод (указывается код): ru, en ...)")
-        t_video = gr.Video(sources = ['upload'])
-        t_audio = gr.Audio(type = 'filepath', sources = ['upload'])
+        t_subtitres_whisper = gr.Radio(["Субтитры", "Распознать аудио"], label="Вариант исполнения на YouTube:")
+        t_sURL = gr.Text("https://www.youtube.com/watch?v=6EsCI3CbmTk", label="YouTube - ссылка на страницу с видео")
+        t_subtitres_lang = gr.Text("ru", label="Язык субтитров (основной либо перевод (указывается код): ru, en ...)")
+        t_video = gr.Video(sources=['upload'])
+        t_audio = gr.Audio(type='filepath', sources=['upload'])
         btn = gr.Button(value="Сформировать стенограмму")
-        t_stenogr = gr.Text("", label = "Стенограмма:")
+        t_stenogr = gr.Text("", label="Стенограмма:")
         btn_summarize = gr.Button(value="Суммаризировать стенограмму")
-        t_summarize = gr.Text("", label = "Суммаризация:")
+        t_summarize = gr.Text("", label="Суммаризация:")
         
         btn.click(process_video, inputs=[t_subtitres_whisper, t_sURL, t_subtitres_lang, t_video, t_audio], outputs=[t_stenogr])
         btn_summarize.click(process_summarize, inputs=[t_stenogr], outputs=[t_summarize])
