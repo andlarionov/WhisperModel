@@ -14,8 +14,8 @@ def test_YTsubtitres():
     result = wm5.process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio)
     result = result.strip()
     sResult = 'Ну что дружище'
-    
-    assert result[:len(sResult)]  == sResult
+
+    assert result[:len(sResult)] == sResult
 
 
 def test_YTvideo():
@@ -29,8 +29,8 @@ def test_YTvideo():
     result = wm5.process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio)
     result = result.strip()
     sResult = 'Ну что, дружище'
-    
-    assert result[:len(sResult)]  == sResult
+
+    assert result[:len(sResult)] == sResult
 
 
 def test_audio():
@@ -44,8 +44,8 @@ def test_audio():
     result = wm5.process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio)
     result = result.strip()
     sResult = 'Наш покупал'
-    
-    assert result[:len(sResult)]  == sResult
+
+    assert result[:len(sResult)] == sResult
 
 
 def test_video():
@@ -59,5 +59,5 @@ def test_video():
     result = wm5.process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio)
     result = result.strip()
     sResult = 'Передаю слово Алексею Владимировичу Саватееву'
-    
-    assert result[:len(sResult)]  == sResult
+
+    assert result[:len(sResult)] == sResult
