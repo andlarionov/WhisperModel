@@ -1,6 +1,6 @@
 import gradio as gr
 import os
-import moviepy.editor as mp 
+import moviepy.editor as mp
 from faster_whisper import WhisperModel
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
