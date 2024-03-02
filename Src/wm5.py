@@ -26,7 +26,6 @@ def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
 
     # Извлекаем видео ID из URL
     if 'v=' in sURL and sURL[:len('https://www.youtube.com/watch?')] == 'https://www.youtube.com/watch?':
-        video_id = sURL.split("v=")[1]
         # Получаем информацию о видео
         yt = YouTube(sURL)
         if subtitres_whisper == 'Субтитры':
