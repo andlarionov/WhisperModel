@@ -1,6 +1,6 @@
 import gradio as gr
 import os
-import moviepy.editor as mp 
+import moviepy.editor as mp
 from faster_whisper import WhisperModel
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -15,12 +15,13 @@ nltk.download('stopwords')
 # Загружаем модель Whisper
 model = WhisperModel("large-v2")
 
+
 def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
     # Распознаём аудио-файл
-    if t_audio != "" and not(t_audio is None):  
+    if t_audio != "" and not (t_audio is None):
         return GetTextFromVideoAudio(t_audio)
-    # Распознаём видео-файл     
-    if t_video != "" and not(t_video is None):
+    # Распознаём видео-файл
+    if t_video != "" and not (t_video is None):
         return GetTextFromVideoAudio(t_video)
 
     # Извлекаем видео ID из URL
@@ -34,7 +35,7 @@ def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
 
         if subtitres_whisper == 'Распознать аудио':
             # Анализ аудио
-            return GetTextFromVideoYt(yt)    
+            return GetTextFromVideoYt(yt)
 
     return "Укажите параметры работы с видео материалом."
 
@@ -74,7 +75,7 @@ def GetSubtitres(first_language_code, yt):
 # получаем аудио с Ютьюб
 def GetTextFromVideoYt(yt):
     fileName = yt.streams.filter(type = "audio").first().download()
-    audio_file = mp.AudioFileClip(fileName) 
+    audio_file = mp.AudioFileClip(fileName)
     audio_file.write_audiofile("vrem.wav")
     
     segments, info = model.transcribe("vrem.wav")
@@ -99,7 +100,8 @@ def GetTextFromVideoAudio(fileName):
     os.remove("vrem.wav")
 
     return sText
-    
+
+
 def process_summarize(sIn):
     if sIn != "" and not(sIn is None):
         summarizer = LsaSummarizer()
@@ -115,12 +117,12 @@ with gr.Blocks() as demo:
         t_video = gr.Video(sources = ['upload'])
         t_audio = gr.Audio(type = 'filepath', sources = ['upload'])
         btn = gr.Button(value="Сформировать стенограмму")
-        t_stenogr = gr.Text("", label = "Стенограмма:") 
-        btn_summarize = gr.Button(value="Суммаризировать стенограмму") 
-        t_summarize = gr.Text("", label = "Суммаризация:")  
+        t_stenogr = gr.Text("", label = "Стенограмма:")
+        btn_summarize = gr.Button(value="Суммаризировать стенограмму")
+        t_summarize = gr.Text("", label = "Суммаризация:")
         
         btn.click(process_video, inputs=[t_subtitres_whisper, t_sURL, t_subtitres_lang, t_video, t_audio], outputs=[t_stenogr])
         btn_summarize.click(process_summarize, inputs=[t_stenogr], outputs=[t_summarize])
         
-#demo.launch(share=True)                  
-#iface.launch(share=True)
+# demo.launch(share=True)                 
+# iface.launch(share=True)
