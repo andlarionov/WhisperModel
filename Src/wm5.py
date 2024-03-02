@@ -76,7 +76,7 @@ def GetSubtitres(first_language_code, yt):
 
 # получаем аудио с Ютьюб
 def GetTextFromVideoYt(yt):
-    fileName = yt.streams.filter(type = "audio").first().download()
+    fileName = yt.streams.filter(type="audio").first().download()
     audio_file = mp.AudioFileClip(fileName)
     audio_file.write_audiofile("vrem.wav")
     
@@ -106,7 +106,7 @@ def GetTextFromVideoAudio(fileName):
 
 
 def process_summarize(sIn):
-    if sIn != "" and not(sIn is None):
+    if sIn != "" and not (sIn is None):
         summarizer = LsaSummarizer()
         parser = PlaintextParser.from_string(sIn, Tokenizer("russian"))
         summarized_text = summarizer(parser.document, sentences_count=10)  # Меняем число предложений
