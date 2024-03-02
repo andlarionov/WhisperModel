@@ -79,7 +79,7 @@ def GetTextFromVideoYt(yt):
     fileName = yt.streams.filter(type="audio").first().download()
     audio_file = mp.AudioFileClip(fileName)
     audio_file.write_audiofile("vrem.wav")
-    
+
     segments, info = model.transcribe("vrem.wav")
     sText = ''
     for segment in segments:
@@ -129,7 +129,6 @@ with gr.Blocks() as demo:
 
         btn.click(process_video, inputs=[t_subtitres_whisper, t_sURL, t_subtitres_lang, t_video, t_audio], outputs=[t_stenogr])
         btn_summarize.click(process_summarize, inputs=[t_stenogr], outputs=[t_summarize])
-        
+
 demo.launch(share=True)
 # iface.launch(share=True)
-
