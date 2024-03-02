@@ -109,8 +109,6 @@ def process_summarize(sIn):
         return "\n".join(str(sentence) for sentence in summarized_text)
     return 'Необходимо заполнить поле стенограмма'
 
-
-
 with gr.Blocks() as demo:
     gr.Markdown("<span style='font-size: 20px;'> Приложение для Формирования текстов из видео и аудиофайлов </span>")
     with gr.Column(scale=2):
