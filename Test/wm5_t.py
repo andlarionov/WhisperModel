@@ -87,7 +87,8 @@ def GetTextFromVideoYt(yt):
     os.remove("vrem.wav")
 
     return sText
-   
+
+
 # Работа с аудио/видео на локальном диске
 def GetTextFromVideoAudio(fileName):
     audio_file = mp.AudioFileClip(fileName)
@@ -104,7 +105,7 @@ def GetTextFromVideoAudio(fileName):
 
 
 def process_summarize(sIn):
-    if sIn != "" and not(sIn is None):
+    if sIn != "" and not (sIn is None):
         summarizer = LsaSummarizer()
         parser = PlaintextParser.from_string(sIn, Tokenizer("russian"))
         summarized_text = summarizer(parser.document, sentences_count=10)  # Меняем число предложений
