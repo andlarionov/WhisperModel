@@ -1,6 +1,7 @@
-import pytest
-#from wm5 import process_video
+# import pytest
+# from wm5 import process_video
 import wm5_t as wm5
+
 
 def test_YTsubtitres():
     #Выдергиваем субтитры
