@@ -26,7 +26,6 @@ def process_video(subtitres_whisper, sURL, subtitres_lang, t_video, t_audio):
 
     # Извлекаем видео ID из URL
     if 'v=' in sURL and sURL[:len('https://www.youtube.com/watch?')] == 'https://www.youtube.com/watch?':
-        video_id = sURL.split("v=")[1]
         # Получаем информацию о видео
         yt = YouTube(sURL)
         if subtitres_whisper == 'Субтитры':
@@ -57,7 +56,7 @@ def GetSubtitres(first_language_code, yt):
 
     if not bFind:
         for transcript in transcript_list:
-            if transcript.is_translatable == True:
+            if transcript.is_translatable is True:
                 sLang += '   - Базовый язык ' + transcript.language_code + ' - ' + transcript.language + '. Переводы:\n'
                 for tr_l in transcript.translation_languages:
                     sLang += '      - ' + tr_l['language_code'] + ' - ' + tr_l['language'] + '\n'
@@ -76,10 +75,10 @@ def GetSubtitres(first_language_code, yt):
 
 # получаем аудио с Ютьюб
 def GetTextFromVideoYt(yt):
-    fileName = yt.streams.filter(type = "audio").first().download()
+    fileName = yt.streams.filter(type="audio").first().download()
     audio_file = mp.AudioFileClip(fileName)
     audio_file.write_audiofile("vrem.wav")
-    
+
     segments, info = model.transcribe("vrem.wav")
     sText = ''
     for segment in segments:
@@ -88,7 +87,7 @@ def GetTextFromVideoYt(yt):
     os.remove("vrem.wav")
 
     return sText
-        
+   
 # Работа с аудио/видео на локальном диске
 def GetTextFromVideoAudio(fileName):
     audio_file = mp.AudioFileClip(fileName)
@@ -111,6 +110,8 @@ def process_summarize(sIn):
         summarized_text = summarizer(parser.document, sentences_count=10)  # Меняем число предложений
         return "\n".join(str(sentence) for sentence in summarized_text)
     return 'Необходимо заполнить поле стенограмма'
+
+
 with gr.Blocks() as demo:
     with gr.Column(scale=2):
         t_subtitres_whisper = gr.Radio(["Субтитры", "Распознать аудио"], label="Вариант исполнения на YouTube:")
@@ -122,9 +123,9 @@ with gr.Blocks() as demo:
         t_stenogr = gr.Text("", label="Стенограмма:")
         btn_summarize = gr.Button(value="Суммаризировать стенограмму")
         t_summarize = gr.Text("", label="Суммаризация:")
-        
+
         btn.click(process_video, inputs=[t_subtitres_whisper, t_sURL, t_subtitres_lang, t_video, t_audio], outputs=[t_stenogr])
         btn_summarize.click(process_summarize, inputs=[t_stenogr], outputs=[t_summarize])
-        
-# demo.launch(share=True)                 
+
+# demo.launch(share=True)
 # iface.launch(share=True)
